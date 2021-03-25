@@ -15,6 +15,7 @@
 #include <touchgfx/widgets/canvas/PainterRGB565.hpp>
 #include <touchgfx/widgets/graph/GraphLabels.hpp>
 #include <touchgfx/containers/Slider.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class MainViewBase : public touchgfx::View<MainPresenter>
 {
@@ -49,6 +50,13 @@ protected:
     touchgfx::GraphLabelsX graphMajorXAxisLabel;
     touchgfx::GraphLabelsY graphMajorYAxisLabel;
     touchgfx::Slider sliderResolution;
+    touchgfx::TextAreaWithOneWildcard textArea1;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t TEXTAREA1_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar textArea1Buffer[TEXTAREA1_SIZE];
 
 private:
 

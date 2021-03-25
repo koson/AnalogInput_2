@@ -36,9 +36,9 @@
             "Alpha": 255,
             "Name": "graphBackground",
             "X": 15,
-            "Y": 24,
+            "Y": 47,
             "Width": 389,
-            "Height": 224,
+            "Height": 201,
             "Visible": true,
             "LockPosition": false,
             "Draggable": false,
@@ -126,9 +126,9 @@
             },
             "Name": "graph",
             "X": 15,
-            "Y": 24,
+            "Y": 47,
             "Width": 389,
-            "Height": 224,
+            "Height": 201,
             "Visible": true,
             "LockPosition": false,
             "Draggable": false,
@@ -156,6 +156,35 @@
             "Y": 47,
             "Width": 34,
             "Height": 179,
+            "Visible": true,
+            "LockPosition": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Type": "TextArea",
+            "TextId": "SingleUseId5",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId6",
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "textArea1",
+            "X": 161,
+            "Y": 14,
+            "Width": 243,
+            "Height": 25,
             "Visible": true,
             "LockPosition": false,
             "Draggable": false,
@@ -191,6 +220,14 @@
       },
       {
         "TextEntryId": "SingleUseId2",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId5",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId6",
         "IsResource": false
       }
     ],

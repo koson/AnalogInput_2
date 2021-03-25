@@ -18,14 +18,14 @@ MainViewBase::MainViewBase() :
     background.setXY(0, 0);
     background.setBitmap(touchgfx::Bitmap(BITMAP_BLUE_BACKGROUNDS_MAIN_BG_480X272PX_ID));
 
-    graphBackground.setPosition(15, 24, 389, 224);
+    graphBackground.setPosition(15, 47, 389, 201);
     graphBackground.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     graphBackground.setBorderColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     graphBackground.setBorderSize(1);
 
     graph.setScale(1);
     graph.setGraphRangeX(0, 100);
-    graph.setPosition(15, 24, 389, 224);
+    graph.setPosition(15, 47, 389, 201);
     graph.setGraphAreaMargin(10, 28, 19, 22);
     graph.setGraphAreaPadding(2, 6, 0, 6);
     graph.setGraphRangeY(0, 180);
@@ -61,11 +61,19 @@ MainViewBase::MainViewBase() :
     sliderResolution.setValue(180);
     sliderResolution.setNewValueCallback(sliderValueChangedCallback);
 
+    textArea1.setPosition(161, 14, 243, 25);
+    textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1.setLinespacing(0);
+    Unicode::snprintf(textArea1Buffer, TEXTAREA1_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID6).getText());
+    textArea1.setWildcard(textArea1Buffer);
+    textArea1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
+
     add(__background);
     add(background);
     add(graphBackground);
     add(graph);
     add(sliderResolution);
+    add(textArea1);
 }
 
 void MainViewBase::setupScreen()
