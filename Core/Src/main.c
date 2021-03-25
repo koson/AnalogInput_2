@@ -25,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stm32746g_discovery_qspi.h>
+#include "PollingRoutines.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -75,25 +76,9 @@ TIM_HandleTypeDef htim1;
 
 SDRAM_HandleTypeDef hsdram1;
 
-/* Definitions for TouchGFXTask */
-osThreadId_t TouchGFXTaskHandle;
-const osThreadAttr_t TouchGFXTask_attributes = {
-  .name = "TouchGFXTask",
-  .stack_size = 4096 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
-};
-/* Definitions for taskAnalogInput */
-osThreadId_t taskAnalogInputHandle;
-const osThreadAttr_t taskAnalogInput_attributes = {
-  .name = "taskAnalogInput",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityLow,
-};
-/* Definitions for binarySemaphore */
-osSemaphoreId_t binarySemaphoreHandle;
-const osSemaphoreAttr_t binarySemaphore_attributes = {
-  .name = "binarySemaphore"
-};
+osThreadId TouchGFXTaskHandle;
+osThreadId taskAnalogInputHandle;
+osSemaphoreId binarySemAnalogHandle;
 /* USER CODE BEGIN PV */
 static FMC_SDRAM_CommandTypeDef Command;
 /* USER CODE END PV */
@@ -111,8 +96,8 @@ static void MX_LTDC_Init(void);
 static void MX_QUADSPI_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
-void TouchGFX_Task(void *argument);
-void StartTaskAnalogInput(void *argument);
+void TouchGFX_Task(void const * argument);
+void StartTaskAnalogInput(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -174,16 +159,14 @@ int main(void)
 
   /* USER CODE END 2 */
 
-  /* Init scheduler */
-  osKernelInitialize();
-
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
   /* Create the semaphores(s) */
-  /* creation of binarySemaphore */
-  binarySemaphoreHandle = osSemaphoreNew(1, 1, &binarySemaphore_attributes);
+  /* definition and creation of binarySemAnalog */
+  osSemaphoreDef(binarySemAnalog);
+  binarySemAnalogHandle = osSemaphoreCreate(osSemaphore(binarySemAnalog), 1);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
@@ -198,19 +181,17 @@ int main(void)
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* creation of TouchGFXTask */
-  TouchGFXTaskHandle = osThreadNew(TouchGFX_Task, NULL, &TouchGFXTask_attributes);
+  /* definition and creation of TouchGFXTask */
+  osThreadDef(TouchGFXTask, TouchGFX_Task, osPriorityNormal, 0, 4096);
+  TouchGFXTaskHandle = osThreadCreate(osThread(TouchGFXTask), NULL);
 
-  /* creation of taskAnalogInput */
-  taskAnalogInputHandle = osThreadNew(StartTaskAnalogInput, NULL, &taskAnalogInput_attributes);
+  /* definition and creation of taskAnalogInput */
+  osThreadDef(taskAnalogInput, StartTaskAnalogInput, osPriorityLow, 0, 128);
+  taskAnalogInputHandle = osThreadCreate(osThread(taskAnalogInput), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
-
-  /* USER CODE BEGIN RTOS_EVENTS */
-  /* add events, ... */
-  /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
   osKernelStart();
@@ -793,7 +774,7 @@ static void MX_GPIO_Init(void)
   * @retval None
   */
 /* USER CODE END Header_TouchGFX_Task */
-__weak void TouchGFX_Task(void *argument)
+__weak void TouchGFX_Task(void const * argument)
 {
   /* USER CODE BEGIN 5 */
   MX_TouchGFX_Process();
@@ -812,12 +793,14 @@ __weak void TouchGFX_Task(void *argument)
 * @retval None
 */
 /* USER CODE END Header_StartTaskAnalogInput */
-void StartTaskAnalogInput(void *argument)
+void StartTaskAnalogInput(void const * argument)
 {
   /* USER CODE BEGIN StartTaskAnalogInput */
-  /* Infinite loop */
+ PollingInit();
+	/* Infinite loop */
   for(;;)
   {
+	  PollingRoutine();
     osDelay(1);
   }
   /* USER CODE END StartTaskAnalogInput */

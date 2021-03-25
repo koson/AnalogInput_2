@@ -49,13 +49,13 @@
           {
             "Type": "DynamicGraph",
             "DataSeed": 1263446126,
-            "NumberOfValues": 100,
-            "MaxY": 180.0,
+            "NumberOfValues": 200,
+            "MaxY": 1024.0,
             "MinY": 0.0,
             "Precision": "1",
             "UseCustomVisibleDataPointRange": true,
             "FirstIndex": 0,
-            "LastIndex": 100,
+            "LastIndex": 199,
             "MapDataPointIndexToCustomValue": false,
             "XAxisOffset": 0.0,
             "XAxisScale": 1.0,
@@ -69,21 +69,20 @@
             "PaddingBottom": 6,
             "PaddingLeft": 6,
             "PaddingRight": 0,
-            "GraphType": "GraphWrapClear",
+            "GraphType": "GraphScroll",
             "GraphDrawers": [
               {
                 "Type": "LineDrawer",
                 "LineWidth": 2,
-                "FileNameImage": "",
                 "Color": {
-                  "Red": 20,
-                  "Green": 151,
-                  "Blue": 197
+                  "Red": 0,
+                  "Green": 0,
+                  "Blue": 255
                 },
                 "Alpha": 255
               }
             ],
-            "YAxisGrid": {
+            "XAxisGrid": {
               "Type": "GraphGrid",
               "Color": {
                 "Red": 20,
@@ -92,34 +91,45 @@
               },
               "Interval": 20.0,
               "LineWidth": 1,
+              "Alpha": 80
+            },
+            "YAxisGrid": {
+              "Type": "GraphGrid",
+              "Color": {
+                "Red": 20,
+                "Green": 151,
+                "Blue": 197
+              },
+              "Interval": 102.0,
+              "LineWidth": 1,
               "Alpha": 255
             },
             "XAxisLabel": {
               "Type": "GraphLabel",
-              "Interval": 20.0,
+              "Interval": 50.0,
               "NumberOfDecimals": 0,
               "DecimalSeparator": "Point",
               "TextColor": {
-                "Red": 0,
-                "Green": 0,
-                "Blue": 0
+                "Red": 20,
+                "Green": 151,
+                "Blue": 197
               },
-              "TextId": "SingleUseId2",
+              "TextId": "SingleUseId7",
               "Alpha": 255,
               "TextRotation": "0",
               "Position": "Bottom"
             },
             "YAxisLabel": {
               "Type": "GraphLabel",
-              "Interval": 20.0,
+              "Interval": 200.0,
               "NumberOfDecimals": 0,
               "DecimalSeparator": "Point",
               "TextColor": {
-                "Red": 0,
-                "Green": 0,
-                "Blue": 0
+                "Red": 20,
+                "Green": 151,
+                "Blue": 197
               },
-              "TextId": "SingleUseId1",
+              "TextId": "SingleUseId8",
               "Alpha": 255,
               "TextRotation": "0",
               "Position": "Left"
@@ -147,12 +157,12 @@
             "IndicatorPos": 0,
             "IndicatorMax": 125,
             "IndicatorMin": 0,
-            "ValueMax": 250,
+            "ValueMax": 1024,
             "ValueMin": 20,
-            "InitValue": 180,
+            "InitValue": 1024,
             "Style": "Style1",
             "Name": "sliderResolution",
-            "X": 424,
+            "X": 423,
             "Y": 47,
             "Width": 34,
             "Height": 179,
@@ -215,19 +225,19 @@
     "CustomContainerDefinitions": [],
     "TextEntries": [
       {
-        "TextEntryId": "SingleUseId1",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId2",
-        "IsResource": false
-      },
-      {
         "TextEntryId": "SingleUseId5",
         "IsResource": false
       },
       {
         "TextEntryId": "SingleUseId6",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId7",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId8",
         "IsResource": false
       }
     ],

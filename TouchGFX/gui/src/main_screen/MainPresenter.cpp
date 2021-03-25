@@ -16,3 +16,8 @@ void MainPresenter::deactivate()
 {
 
 }
+
+void MainPresenter::analogUpdate(uint32_t value)
+{
+	view.analogUpdate(value);
+}

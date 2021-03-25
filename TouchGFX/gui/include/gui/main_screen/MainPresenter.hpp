@@ -26,6 +26,8 @@ public:
     virtual void deactivate();
 
     virtual ~MainPresenter() {};
+    void analogUpdate(uint32_t value);
+
 
 private:
     MainPresenter();

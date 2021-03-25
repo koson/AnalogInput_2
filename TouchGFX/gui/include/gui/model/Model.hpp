@@ -14,6 +14,7 @@ public:
     }
 
     void tick();
+    void analogUpdate();
 protected:
     ModelListener* modelListener;
 };

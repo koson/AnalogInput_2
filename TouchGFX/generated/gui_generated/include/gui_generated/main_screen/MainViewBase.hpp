@@ -10,7 +10,7 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/BoxWithBorder.hpp>
-#include <touchgfx/widgets/graph/GraphWrapAndClear.hpp>
+#include <touchgfx/widgets/graph/GraphScroll.hpp>
 #include <touchgfx/widgets/graph/GraphElements.hpp>
 #include <touchgfx/widgets/canvas/PainterRGB565.hpp>
 #include <touchgfx/widgets/graph/GraphLabels.hpp>
@@ -43,9 +43,10 @@ protected:
     touchgfx::Box __background;
     touchgfx::Image background;
     touchgfx::BoxWithBorder graphBackground;
-    touchgfx::GraphWrapAndClear<100> graph;
+    touchgfx::GraphScroll<200> graph;
     touchgfx::GraphElementLine graphLine1;
     touchgfx::PainterRGB565 graphLine1Painter;
+    touchgfx::GraphElementGridX graphMajorXAxisGrid;
     touchgfx::GraphElementGridY graphMajorYAxisGrid;
     touchgfx::GraphLabelsX graphMajorXAxisLabel;
     touchgfx::GraphLabelsY graphMajorYAxisLabel;

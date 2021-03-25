@@ -15,15 +15,16 @@
   ******************************************************************************
   */
 #include <cassert>
-#include <cmsis_os2.h>
+#include <cmsis_os.h>
+#include <touchgfx/hal/GPIO.hpp>
 #include <touchgfx/hal/HAL.hpp>
 #include <touchgfx/hal/OSWrappers.hpp>
 
-static osSemaphoreId_t frame_buffer_sem = NULL;
-static osMessageQueueId_t vsync_queue = NULL;
+static osSemaphoreId frame_buffer_sem;      // Semaphore ID
+osSemaphoreDef(frame_buffer_sem);           // Semaphore definition
 
-// Just a dummy value to insert in the VSYNC queue.
-static uint32_t dummy = 0x5a;
+static osSemaphoreId vsync_sem;             // Semaphore ID
+osSemaphoreDef(vsync_sem);                  // Semaphore definition
 
 using namespace touchgfx;
 
@@ -32,13 +33,11 @@ using namespace touchgfx;
  */
 void OSWrappers::initialize()
 {
-    // Create a queue of length 1
-    frame_buffer_sem = osSemaphoreNew(1, 1, NULL); // Binary semaphore
+    frame_buffer_sem = osSemaphoreCreate(osSemaphore(frame_buffer_sem), 1);
     assert((frame_buffer_sem != NULL) && "Creation of framebuffer semaphore failed");
 
-    // Create a queue of length 1
-    vsync_queue = osMessageQueueNew(1, 4, NULL);
-    assert((vsync_queue != NULL) && "Creation of vsync message queue failed");
+    vsync_sem = osSemaphoreCreate(osSemaphore(vsync_sem), 1);
+    assert((vsync_sem != NULL) && "Creation of vsync semaphore failed");
 }
 
 /*
@@ -46,7 +45,7 @@ void OSWrappers::initialize()
  */
 void OSWrappers::takeFrameBufferSemaphore()
 {
-    osSemaphoreAcquire(frame_buffer_sem, osWaitForever);
+    osSemaphoreWait(frame_buffer_sem, osWaitForever);
 }
 
 /*
@@ -66,7 +65,7 @@ void OSWrappers::giveFrameBufferSemaphore()
  */
 void OSWrappers::tryTakeFrameBufferSemaphore()
 {
-    osSemaphoreAcquire(frame_buffer_sem, 0);
+    osSemaphoreWait(frame_buffer_sem, 0);
 }
 
 /*
@@ -78,6 +77,7 @@ void OSWrappers::tryTakeFrameBufferSemaphore()
  */
 void OSWrappers::giveFrameBufferSemaphoreFromISR()
 {
+    // Release of semaphore inside an interrupt is handled by the CMSIS layer
     osSemaphoreRelease(frame_buffer_sem);
 }
 
@@ -89,7 +89,8 @@ void OSWrappers::giveFrameBufferSemaphoreFromISR()
  */
 void OSWrappers::signalVSync()
 {
-    osMessageQueuePut(vsync_queue, &dummy, 0, 0);
+    // Release of semaphore inside an interrupt is handled by the CMSIS layer
+    osSemaphoreRelease(vsync_sem);
 }
 
 /*
@@ -98,7 +99,7 @@ void OSWrappers::signalVSync()
   */
 void OSWrappers::signalRenderingDone()
 {
-  // Empty implementation for CMSIS V2
+  // Empty implementation for CMSIS V1
 }
 
 /*
@@ -109,12 +110,11 @@ void OSWrappers::signalRenderingDone()
  */
 void OSWrappers::waitForVSync()
 {
-    uint32_t dummyGet;
     // First make sure the queue is empty, by trying to remove an element with 0 timeout.
-    osMessageQueueGet(vsync_queue, &dummyGet, 0, 0);
+    osSemaphoreWait(vsync_sem, 0);
 
     // Then, wait for next VSYNC to occur.
-    osMessageQueueGet(vsync_queue, &dummyGet, 0, osWaitForever);
+    osSemaphoreWait(vsync_sem, osWaitForever);
 }
 
 /*
