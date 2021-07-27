@@ -19,7 +19,7 @@ MainViewBase::MainViewBase() :
     background.setBitmap(touchgfx::Bitmap(BITMAP_BLUE_BACKGROUNDS_MAIN_BG_480X272PX_ID));
 
     graphBackground.setPosition(15, 47, 389, 201);
-    graphBackground.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    graphBackground.setColor(touchgfx::Color::getColorFrom24BitRGB(253, 255, 235));
     graphBackground.setBorderColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     graphBackground.setBorderSize(1);
 
@@ -56,7 +56,7 @@ MainViewBase::MainViewBase() :
     graph.addLeftElement(graphMajorYAxisLabel);
 
     graphLine1.setScale(1);
-    graphLine1Painter.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 255));
+    graphLine1Painter.setColor(touchgfx::Color::getColorFrom24BitRGB(56, 122, 78));
     graphLine1.setPainter(graphLine1Painter);
     graphLine1.setLineWidth(2);
     graph.addGraphElement(graphLine1);

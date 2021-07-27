@@ -23,9 +23,9 @@
           {
             "Type": "BoxWithBorder",
             "Color": {
-              "Red": 255,
+              "Red": 253,
               "Green": 255,
-              "Blue": 255
+              "Blue": 235
             },
             "BorderColor": {
               "Red": 0,
@@ -49,7 +49,7 @@
           {
             "Type": "DynamicGraph",
             "DataSeed": 1263446126,
-            "NumberOfValues": 200,
+            "NumberOfValues": 640,
             "MaxY": 1024.0,
             "MinY": 0.0,
             "Precision": "1",
@@ -75,9 +75,9 @@
                 "Type": "LineDrawer",
                 "LineWidth": 2,
                 "Color": {
-                  "Red": 0,
-                  "Green": 0,
-                  "Blue": 255
+                  "Red": 56,
+                  "Green": 122,
+                  "Blue": 78
                 },
                 "Alpha": 255
               }
