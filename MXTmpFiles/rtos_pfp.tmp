@@ -1,2 +1,0 @@
-void TouchGFX_Task(void const * argument);
-void StartTaskAnalogInput(void const * argument);#n

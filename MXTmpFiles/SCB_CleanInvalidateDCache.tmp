@@ -1,4 +1,0 @@
-// If the framebuffer is placed in Write Through cached memory (e.g. SRAM) then we need
-// to flush the Dcache prior to letting DMA2D accessing it. That's done
-// using SCB_CleanInvalidateDCache().
-SCB_CleanInvalidateDCache();

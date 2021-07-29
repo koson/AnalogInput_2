@@ -1,3 +1,0 @@
-osThreadId TouchGFXTaskHandle;
-osThreadId taskAnalogInputHandle;
-osSemaphoreId binarySemAnalogHandle;
