@@ -1,0 +1,18 @@
+/* USER CODE BEGIN Header_StartTaskAnalogInput */
+/**
+* @brief Function implementing the taskAnalogInput thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTaskAnalogInput */
+void StartTaskAnalogInput(void const * argument)
+{
+#t/* USER CODE BEGIN StartTaskAnalogInput */
+#t/* Infinite loop */
+#tfor(;;)
+#t{
+#t#tosDelay(1);
+#t}
+#t/* USER CODE END StartTaskAnalogInput */
+}
+#n
