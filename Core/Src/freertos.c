@@ -22,7 +22,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"
-#include "cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -48,19 +47,11 @@
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
-osThreadId TouchGFXTaskHandle;
-osThreadId taskAnalogInputHandle;
-osSemaphoreId binarySemAnalogHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 extern portBASE_TYPE IdleTaskHook(void* p);  
 /* USER CODE END FunctionPrototypes */
-
-void TouchGFX_Task(void const * argument);
-void StartTaskAnalogInput(void const * argument);
-
-void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
@@ -96,88 +87,6 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
   /* place for user code */
 }
 /* USER CODE END GET_IDLE_TASK_MEMORY */
-
-/**
-  * @brief  FreeRTOS initialization
-  * @param  None
-  * @retval None
-  */
-void MX_FREERTOS_Init(void) {
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
-
-  /* Create the semaphores(s) */
-  /* definition and creation of binarySemAnalog */
-  osSemaphoreDef(binarySemAnalog);
-  binarySemAnalogHandle = osSemaphoreCreate(osSemaphore(binarySemAnalog), 1);
-
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
-  /* USER CODE END RTOS_SEMAPHORES */
-
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
-
-  /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-  /* USER CODE END RTOS_QUEUES */
-
-  /* Create the thread(s) */
-  /* definition and creation of TouchGFXTask */
-  osThreadDef(TouchGFXTask, TouchGFX_Task, osPriorityNormal, 0, 4096);
-  TouchGFXTaskHandle = osThreadCreate(osThread(TouchGFXTask), NULL);
-
-  /* definition and creation of taskAnalogInput */
-  osThreadDef(taskAnalogInput, StartTaskAnalogInput, osPriorityLow, 0, 128);
-  taskAnalogInputHandle = osThreadCreate(osThread(taskAnalogInput), NULL);
-
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-  /* USER CODE END RTOS_THREADS */
-
-}
-
-/* USER CODE BEGIN Header_TouchGFX_Task */
-/**
-  * @brief  Function implementing the TouchGFXTask thread.
-  * @param  argument: Not used
-  * @retval None
-  */
-/* USER CODE END Header_TouchGFX_Task */
-__weak void TouchGFX_Task(void const * argument)
-{
-  /* USER CODE BEGIN TouchGFX_Task */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END TouchGFX_Task */
-}
-
-/* USER CODE BEGIN Header_StartTaskAnalogInput */
-/**
-* @brief Function implementing the taskAnalogInput thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartTaskAnalogInput */
-void StartTaskAnalogInput(void const * argument)
-{
-  /* USER CODE BEGIN StartTaskAnalogInput */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END StartTaskAnalogInput */
-}
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
