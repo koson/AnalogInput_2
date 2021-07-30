@@ -72,6 +72,8 @@ LTDC_HandleTypeDef hltdc;
 
 QSPI_HandleTypeDef hqspi;
 
+SD_HandleTypeDef hsd1;
+
 TIM_HandleTypeDef htim1;
 
 SDRAM_HandleTypeDef hsdram1;
@@ -96,6 +98,7 @@ static void MX_LTDC_Init(void);
 static void MX_QUADSPI_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
+static void MX_SDMMC1_SD_Init(void);
 void TouchGFX_Task(void const * argument);
 void StartTaskAnalogInput(void const * argument);
 
@@ -154,6 +157,7 @@ int main(void)
   MX_QUADSPI_Init();
   MX_ADC1_Init();
   MX_TIM1_Init();
+  MX_SDMMC1_SD_Init();
   MX_TouchGFX_Init();
   /* USER CODE BEGIN 2 */
 
@@ -230,9 +234,9 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 25;
-  RCC_OscInitStruct.PLL.PLLN = 400;
+  RCC_OscInitStruct.PLL.PLLN = 432;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 2;
+  RCC_OscInitStruct.PLL.PLLQ = 9;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -252,11 +256,12 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     Error_Handler();
   }
-  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC|RCC_PERIPHCLK_I2C3;
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC|RCC_PERIPHCLK_I2C3
+                              |RCC_PERIPHCLK_SDMMC1|RCC_PERIPHCLK_CLK48;
   PeriphClkInitStruct.PLLSAI.PLLSAIN = 384;
   PeriphClkInitStruct.PLLSAI.PLLSAIR = 5;
   PeriphClkInitStruct.PLLSAI.PLLSAIQ = 2;
@@ -264,6 +269,8 @@ void SystemClock_Config(void)
   PeriphClkInitStruct.PLLSAIDivQ = 1;
   PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_8;
   PeriphClkInitStruct.I2c3ClockSelection = RCC_I2C3CLKSOURCE_PCLK1;
+  PeriphClkInitStruct.Clk48ClockSelection = RCC_CLK48SOURCE_PLL;
+  PeriphClkInitStruct.Sdmmc1ClockSelection = RCC_SDMMC1CLKSOURCE_CLK48;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -404,7 +411,7 @@ static void MX_I2C3_Init(void)
 
   /* USER CODE END I2C3_Init 1 */
   hi2c3.Instance = I2C3;
-  hi2c3.Init.Timing = 0x00C0EAFF;
+  hi2c3.Init.Timing = 0x20404768;
   hi2c3.Init.OwnAddress1 = 0;
   hi2c3.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
   hi2c3.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -531,6 +538,42 @@ static void MX_QUADSPI_Init(void)
   BSP_QSPI_MemoryMappedMode();
   HAL_NVIC_DisableIRQ(QUADSPI_IRQn);
   /* USER CODE END QUADSPI_Init 2 */
+
+}
+
+/**
+  * @brief SDMMC1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SDMMC1_SD_Init(void)
+{
+
+  /* USER CODE BEGIN SDMMC1_Init 0 */
+
+  /* USER CODE END SDMMC1_Init 0 */
+
+  /* USER CODE BEGIN SDMMC1_Init 1 */
+
+  /* USER CODE END SDMMC1_Init 1 */
+  hsd1.Instance = SDMMC1;
+  hsd1.Init.ClockEdge = SDMMC_CLOCK_EDGE_RISING;
+  hsd1.Init.ClockBypass = SDMMC_CLOCK_BYPASS_DISABLE;
+  hsd1.Init.ClockPowerSave = SDMMC_CLOCK_POWER_SAVE_DISABLE;
+  hsd1.Init.BusWide = SDMMC_BUS_WIDE_1B;
+  hsd1.Init.HardwareFlowControl = SDMMC_HARDWARE_FLOW_CONTROL_DISABLE;
+  hsd1.Init.ClockDiv = 0;
+  if (HAL_SD_Init(&hsd1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_SD_ConfigWideBusOperation(&hsd1, SDMMC_BUS_WIDE_4B) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SDMMC1_Init 2 */
+
+  /* USER CODE END SDMMC1_Init 2 */
 
 }
 
@@ -730,6 +773,7 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOG_CLK_ENABLE();
@@ -739,7 +783,6 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOI_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LCD_BL_CTRL_GPIO_Port, LCD_BL_CTRL_Pin, GPIO_PIN_SET);
