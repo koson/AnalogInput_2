@@ -19,12 +19,12 @@ MainViewBase::MainViewBase() :
     background.setBitmap(touchgfx::Bitmap(BITMAP_BLUE_BACKGROUNDS_MAIN_BG_480X272PX_ID));
 
     graphBackground.setPosition(15, 47, 389, 201);
-    graphBackground.setColor(touchgfx::Color::getColorFrom24BitRGB(253, 255, 235));
+    graphBackground.setColor(touchgfx::Color::getColorFrom24BitRGB(250, 248, 192));
     graphBackground.setBorderColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     graphBackground.setBorderSize(1);
 
     graph.setScale(1);
-    graph.setGraphRangeX(0, 199);
+    graph.setGraphRangeX(0, 255);
     graph.setPosition(15, 47, 389, 201);
     graph.setGraphAreaMargin(10, 28, 19, 22);
     graph.setGraphAreaPadding(2, 6, 0, 6);

@@ -23,9 +23,9 @@
           {
             "Type": "BoxWithBorder",
             "Color": {
-              "Red": 253,
-              "Green": 255,
-              "Blue": 235
+              "Red": 250,
+              "Green": 248,
+              "Blue": 192
             },
             "BorderColor": {
               "Red": 0,
@@ -49,13 +49,13 @@
           {
             "Type": "DynamicGraph",
             "DataSeed": 1263446126,
-            "NumberOfValues": 640,
+            "NumberOfValues": 256,
             "MaxY": 1024.0,
             "MinY": 0.0,
             "Precision": "1",
             "UseCustomVisibleDataPointRange": true,
             "FirstIndex": 0,
-            "LastIndex": 199,
+            "LastIndex": 255,
             "MapDataPointIndexToCustomValue": false,
             "XAxisOffset": 0.0,
             "XAxisScale": 1.0,

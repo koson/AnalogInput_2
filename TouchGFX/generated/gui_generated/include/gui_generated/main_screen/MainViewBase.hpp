@@ -43,7 +43,7 @@ protected:
     touchgfx::Box __background;
     touchgfx::Image background;
     touchgfx::BoxWithBorder graphBackground;
-    touchgfx::GraphScroll<640> graph;
+    touchgfx::GraphScroll<256> graph;
     touchgfx::GraphElementLine graphLine1;
     touchgfx::PainterRGB565 graphLine1Painter;
     touchgfx::GraphElementGridX graphMajorXAxisGrid;
